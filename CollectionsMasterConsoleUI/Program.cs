@@ -88,40 +88,56 @@ namespace CollectionsMasterConsoleUI
             NumberPrinter(list);
 
 
-            var r = new Random();
+            //TODO: Print the new capacity
+            Console.WriteLine("Capacity: ");
+            Console.WriteLine(list.Capacity); //checks the current capacity available in the list
 
 
-                //TODO: Print the new capacity
-
-                
             Console.WriteLine("---------------------");
 
             //TODO: Create a method that prints if a user number is present in the list
             //Remember: What if the user types "abc" accident your app should handle that!
-            Console.WriteLine("What number will you search for in the number list?");
             
+            int userNum;
+            bool isNumber;
+
+            do
+            {
+                Console.WriteLine("What number will you search for in the number list?");                            
+                isNumber = int.TryParse(Console.ReadLine(), out userNum);
+            }
+            while (isNumber == false);
+
+            NumberChecker(list, userNum);
+
             Console.WriteLine("-------------------");
 
             Console.WriteLine("All Numbers:");
             //UNCOMMENT this method to print out your numbers from arrays or lists
-            //NumberPrinter();
+            NumberPrinter(list);
             Console.WriteLine("-------------------");
 
 
             //TODO: Create a method that will remove all odd numbers from the list then print results
             Console.WriteLine("Evens Only!!");
-            
+            OddKiller(list);
+
+
             Console.WriteLine("------------------");
 
             //TODO: Sort the list then print results
             Console.WriteLine("Sorted Evens!!");
-            
+            list.Sort();
+
+
             Console.WriteLine("------------------");
 
             //TODO: Convert the list to an array and store that into a variable
-            
+            int[] converted = list.ToArray();
 
             //TODO: Clear the list
+            list.Clear();
+           
             
 
             #endregion
@@ -142,21 +158,42 @@ namespace CollectionsMasterConsoleUI
 
         private static void OddKiller(List<int> numberList)
         {
-            
+            for (int i = numberList.Count - 1; i >= 0; i--)
+            {
+                if (numberList[i] % 2 != 0)
+                {
+                    numberList.Remove(numberList[i]);
+
+                }
+
+            }   
+            NumberPrinter(numberList);
         }
 
         private static void NumberChecker(List<int> numberList, int searchNumber)
         {
-            
-        }
+            bool foundNumber = false;
+            foreach (var number in numberList)
+            {
+                if (numberList.Contains(searchNumber))
+                {
+                    Console.WriteLine(searchNumber);
+                    foundNumber = true;
+                }
+                if (foundNumber == false)
+                {
+                    Console.WriteLine($"Your number is not in the list");
 
-        private static void Populater(List<int> list)
+                }
+            }
+
+        private static void Populater(List<int> list1)
         {
-            while(list.Count < 51)
+            while(list1.Count < 51)
             {
             Random rng = new Random();
-                var r = rng.Next(0, 50);
-                list.Add(num);
+              
+                list1.Add(rng.Next(0, 50));
             }
 
         }
@@ -177,7 +214,7 @@ namespace CollectionsMasterConsoleUI
             }
 
         
-            private static void ReverseArray(int[] array)
+        private static void ReverseArray(int[] array)
         {
             for (int i = 0; i< array.Length / 2; i++)
             {
